@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+		"experimentalDecorators": true,
+		"target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@infra/*": ["src/infra/index.ts"],
+			"@domain/*": ["src/domain/index.ts"]
+		},
+  },
+	"exclude": ["node_modules", "tmp"]
+}
