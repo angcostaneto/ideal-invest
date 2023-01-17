@@ -9,9 +9,11 @@
     "skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@infra/*": ["src/infra/index.ts"],
-			"@domain/*": ["src/domain/index.ts"]
+			"@infra": ["src/infra/index.ts"],
+			"@domain": ["src/domain/index.ts"]
 		},
+		"outDir": "dist"
   },
-	"exclude": ["node_modules", "tmp"]
+	"exclude": ["node_modules", "tmp"],
+	"include": ["**/*.ts"]
 }

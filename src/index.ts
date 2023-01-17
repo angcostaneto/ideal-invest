@@ -1,11 +1,10 @@
 import express from 'express';
 import * as swaggerUi from 'swagger-ui-express';
 // import * as swaggerJson from './swagger/swagger.json';
-
-import { createClienteController } from '@domain/presentation';
+import { createClienteController } from '@domain';
 
 export default class Api {
-  private apiRoutes: express.Router;
+	private apiRoutes: express.Router;
 
 	constructor() {
 		this.apiRoutes = express.Router({ strict: false });
@@ -19,11 +18,11 @@ export default class Api {
 		app.use(express.json());
 
 		app.use(
-      '/docs',
-      swaggerUi.serve,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      // swaggerUi.setup(swaggerJson)
-    );
+			'/docs',
+			swaggerUi.serve
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+			// swaggerUi.setup(swaggerJson)
+		);
 
 		app.listen(port);
 
