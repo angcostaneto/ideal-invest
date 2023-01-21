@@ -1,35 +1,68 @@
+import { Order } from 'sequelize';
 import {
 	Table,
 	Column,
 	Model,
-	HasOne
+	DataType,
+	CreatedAt,
+	UpdatedAt,
+	DeletedAt,
+	AllowNull,
+	ForeignKey
 } from 'sequelize-typescript';
+import { CreateOrdemDto } from '../dtos';
 import { Cliente } from './cliente.model';
 import { Produto } from './produto.model';
 
-
 @Table
-export class Ordem extends Model<Ordem> {
-
-	@Column({ primaryKey: true, autoIncrement: true })
+export class Ordem extends Model<Ordem, CreateOrdemDto> {
+	@Column({
+		primaryKey: true,
+		autoIncrement: true,
+		type: DataType.BIGINT
+	})
 	declare idTransacao: number;
 
-	@Column
+	@Column({
+		type: DataType.DECIMAL,
+		allowNull: false
+	})
 	declare valorCompra: number;
 
-	@Column
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false
+	})
 	declare qtdCompra: number;
 
-	@Column
+	@Column({
+		type: DataType.DECIMAL,
+		allowNull: false
+	})
 	declare totalCompra: number;
 
-	@Column
+	@Column({
+		type: DataType.DATE,
+		allowNull: false
+	})
 	declare dataOrdem: Date;
 
-	@HasOne(() => Cliente)
+	@ForeignKey(() => Cliente)
+	@AllowNull(false)
+	@Column(DataType.BIGINT)
 	declare idCliente: number;
 
-	@HasOne(() => Produto)
+	@ForeignKey(() => Produto)
+	@AllowNull(false)
+	@Column(DataType.BIGINT)
 	declare idProduto: number;
 
+	@CreatedAt
+	declare readonly createdAt: Date;
+
+	@UpdatedAt
+	declare readonly updatedAt: Date;
+
+	@DeletedAt
+	declare readonly deletedAt: Date;
 }

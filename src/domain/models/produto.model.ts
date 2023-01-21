@@ -1,18 +1,42 @@
 import {
 	Table,
 	Column,
-	Model
+	Model,
+	DataType,
+	CreatedAt,
+	UpdatedAt,
+	DeletedAt
 } from 'sequelize-typescript';
+import { CreateProdutoDto } from '../dtos';
 
 @Table
-export class Produto extends Model<Produto> {
-
-	@Column({ primaryKey: true, autoIncrement: true })
+export class Produto extends Model<Produto, CreateProdutoDto> {
+	@Column({
+		primaryKey: true,
+		autoIncrement: true,
+		type: DataType.BIGINT
+	})
 	declare idProduto: number;
 
-	@Column
+	@Column({
+		type: DataType.STRING,
+		allowNull: false
+	})
 	declare nome: string;
 
-	@Column
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
+		defaultValue: true
+	})
 	declare ativo: boolean;
+
+	@CreatedAt
+	declare readonly createdAt: Date;
+
+	@UpdatedAt
+	declare readonly updatedAt: Date;
+
+	@DeletedAt
+	declare readonly deletedAt: Date;
 }

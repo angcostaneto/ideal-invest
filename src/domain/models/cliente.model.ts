@@ -3,66 +3,76 @@ import {
 	Column,
 	Model,
 	BeforeSave,
-	DataType
+	DataType,
+	CreatedAt,
+	UpdatedAt,
+	DeletedAt,
+	Default
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 import { CreateClienteDto } from '../dtos';
 
 @Table
 export class Cliente extends Model<Cliente, CreateClienteDto> {
-
-	@Column({ primaryKey: true, autoIncrement: true })
+	@Column({
+		primaryKey: true,
+		autoIncrement: true,
+		type: DataType.BIGINT
+	})
 	declare idCliente: number;
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: false,
+		allowNull: false
 	})
 	declare nome: string;
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: false,
+		allowNull: false
 	})
 	declare cpf: string;
 
 	@Column({
 		type: DataType.STRING,
-		allowNull: false,
+		allowNull: false
 	})
 	declare password: string;
 
 	@Column({
 		type: DataType.DATE,
-		allowNull: false,
+		allowNull: false
 	})
 	declare dtNascimento: Date;
 
 	@Column({
 		type: DataType.BOOLEAN,
 		allowNull: false,
+		defaultValue: true
 	})
 	declare ativo: boolean;
 
+	@CreatedAt
+	declare readonly createdAt: Date;
+
+	@UpdatedAt
+	declare readonly updatedAt: Date;
+
+	@DeletedAt
+	declare readonly deletedAt: Date;
+
 	declare jwt: string;
-  declare login: boolean;
+	declare login: boolean;
 
 	@BeforeSave
-	async hashPassword(cliente: Cliente) {
-		if (cliente.changed('password')) {
-			let error, salt, hash;
-
-			[error, salt] = await bcrypt.genSalt(10);
-			if (error) {
-				throw error;
-			}
-
-			[error, hash] = await bcrypt.hash(cliente.password, salt);
-			if (error) {
-				throw error;
-			}
-
-			cliente.password = hash;
-		}
-	}
+	static hashPassword = async (cliente: Cliente) => {
+		return bcrypt
+			.hash(cliente.password, 10)
+			.then((hash) => {
+				cliente.password = hash;
+			})
+			.catch((err) => {
+				throw new Error();
+			});
+	};
 }

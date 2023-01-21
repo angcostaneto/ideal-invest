@@ -1,2 +1,3 @@
 export * from './cliente.repository';
-export * from './cliente.respository.factory';
+export * from './ordem.repository';
+export * from './produto.repository';

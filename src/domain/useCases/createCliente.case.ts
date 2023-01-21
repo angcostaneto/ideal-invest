@@ -11,10 +11,9 @@ export class CreateClienteCase {
 	execute = async (request: Request, response: Response) => {
 		try {
 			const result = await this.repository.create(request.body);
-
 			return response.status(201).send(result);
 		} catch (error) {
-			throw error;
+			console.log(error);
 		}
 	};
 }

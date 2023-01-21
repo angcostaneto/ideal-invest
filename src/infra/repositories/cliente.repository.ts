@@ -1,8 +1,16 @@
-import { Cliente } from '@domain';
-import { CreateClienteDto, ClienteDto } from '@domain';
+import { Cliente, CreateClienteDto, ClienteDto } from '@domain';
 
 export class ClienteRepository {
-	async create(clienteData: CreateClienteDto): Promise<ClienteDto> {
-		return await Cliente.create(clienteData);
-	}
+	create = async (clienteData: CreateClienteDto): Promise<ClienteDto> => {
+		const cliente = await Cliente.create(clienteData);
+
+		return {
+			nome: cliente.nome,
+			cpf: cliente.cpf,
+			dtNascimento: cliente.dtNascimento,
+			ativo: cliente.ativo
+		} as ClienteDto;
+	};
 }
+
+export const clienteRepository: ClienteRepository = new ClienteRepository();

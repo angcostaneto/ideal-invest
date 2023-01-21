@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":  "nodemon --watch '*/**.ts' -e ts --exec tsc",
+    "dev": "nodemon --watch src/ --exec npx ts-node -r tsconfig-paths/register src/index.ts -e ts",
     "test": "jest",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-		"swagger": "node tools/generators/swagger.js"
+    "swagger": "node tools/generators/swagger.js"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "sequelize": "^6.28.0",
     "sequelize-typescript": "^2.1.5",
     "swagger": "^0.7.5",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "tsconfig-paths": "^4.1.2"
   }
 }

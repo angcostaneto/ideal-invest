@@ -3,5 +3,4 @@ export interface CreateClienteDto {
 	cpf: String;
 	password: String;
 	dtNascimento: Date;
-	ativo: Boolean;
 }

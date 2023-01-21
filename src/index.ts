@@ -1,7 +1,14 @@
 import express from 'express';
 import * as swaggerUi from 'swagger-ui-express';
 // import * as swaggerJson from './swagger/swagger.json';
-import { createClienteController } from '@domain';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: __dirname + '/../.env' });
+import {
+	createClienteController,
+	createOrdemController,
+	sequelize
+} from '@domain';
+import { createProdutoController } from './domain/presentation/createProduto.controller';
 
 export default class Api {
 	private apiRoutes: express.Router;
@@ -9,11 +16,15 @@ export default class Api {
 	constructor() {
 		this.apiRoutes = express.Router({ strict: false });
 		createClienteController(this.apiRoutes);
+		createOrdemController(this.apiRoutes);
+		createProdutoController(this.apiRoutes);
 	}
 
 	startApplication() {
 		const app = express();
 		const port = process.env.PORT || 8888;
+		sequelize.authenticate();
+		sequelize.sync();
 
 		app.use(express.json());
 
@@ -24,6 +35,7 @@ export default class Api {
 			// swaggerUi.setup(swaggerJson)
 		);
 
+		app.use('/api', this.apiRoutes);
 		app.listen(port);
 
 		return app;
