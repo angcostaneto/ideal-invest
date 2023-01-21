@@ -6,8 +6,7 @@ import {
 	DataType,
 	CreatedAt,
 	UpdatedAt,
-	DeletedAt,
-	Default
+	DeletedAt
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 import { CreateClienteDto } from '../dtos';

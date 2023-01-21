@@ -4,4 +4,5 @@ export interface CreateOrdemDto {
 	totalCompra: number;
 	dataOrdem: Date;
 	idProduto: number;
+	idCliente: number;
 }

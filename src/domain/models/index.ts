@@ -1,7 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
 
-console.log(process.env['DATABASE']);
-
 export const sequelize = new Sequelize({
 	database: process.env['DATABASE'],
 	dialect: 'mysql',

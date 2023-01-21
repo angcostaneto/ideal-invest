@@ -6,9 +6,10 @@ dotenv.config({ path: __dirname + '/../.env' });
 import {
 	createClienteController,
 	createOrdemController,
+	createProdutoController,
+	getOrdemController,
 	sequelize
 } from '@domain';
-import { createProdutoController } from './domain/presentation/createProduto.controller';
 
 export default class Api {
 	private apiRoutes: express.Router;
@@ -18,6 +19,7 @@ export default class Api {
 		createClienteController(this.apiRoutes);
 		createOrdemController(this.apiRoutes);
 		createProdutoController(this.apiRoutes);
+		getOrdemController(this.apiRoutes);
 	}
 
 	startApplication() {

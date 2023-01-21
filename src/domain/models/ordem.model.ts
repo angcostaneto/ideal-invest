@@ -1,4 +1,3 @@
-import { Order } from 'sequelize';
 import {
 	Table,
 	Column,

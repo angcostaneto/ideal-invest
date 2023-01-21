@@ -1,4 +1,4 @@
-import { Ordem, CreateOrdemDto, OrdemDto } from '@domain';
+import { Ordem, CreateOrdemDto, OrdemDto, GetOrdemDto } from '@domain';
 
 export class OrdermRepository {
 	create = async (ordemData: CreateOrdemDto): Promise<OrdemDto> => {
@@ -12,6 +12,27 @@ export class OrdermRepository {
 			dataOrdem: ordem.dataOrdem,
 			idProduto: ordem.idProduto
 		} as OrdemDto;
+	};
+
+	getById = async (ordermData: GetOrdemDto): Promise<OrdemDto | {}> => {
+		const ordem = await Ordem.findOne({
+			where: {
+				idTransacao: ordermData.idTransacao
+			}
+		});
+
+		if (ordem) {
+			return {
+				idTransacao: ordem.idTransacao,
+				valorCompra: ordem.valorCompra,
+				qtdCompra: ordem.qtdCompra,
+				totalCompra: ordem.totalCompra,
+				dataOrdem: ordem.dataOrdem,
+				idProduto: ordem.idProduto
+			} as OrdemDto;
+		}
+
+		return {};
 	};
 }
 
