@@ -12,6 +12,7 @@ import {
 	sequelize
 } from '@domain';
 import { loginController } from './domain/presentation/login.controller';
+import { logoutController } from './domain/presentation/logout.controller';
 
 export default class Api {
 	private apiRoutes: express.Router;
@@ -24,6 +25,7 @@ export default class Api {
 		createProdutoController(this.apiRoutes);
 		getOrdemController(this.apiRoutes);
 		loginController(this.apiRoutes);
+		logoutController(this.apiRoutes);
 	}
 
 	startApplication() {

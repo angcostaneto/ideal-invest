@@ -1,4 +1,4 @@
-import { JwtInterface, verifyJwt } from '@services';
+import { JwtInterface, verifyJwt, cacheGet } from '@services';
 import { Request, Response, NextFunction } from 'express';
 
 export const verifyToken = async (
@@ -12,6 +12,11 @@ export const verifyToken = async (
 		return response.status(403).send({
 			message: 'No token provided!'
 		});
+	}
+
+	const isBlackListed = await cacheGet(token);
+	if (isBlackListed) {
+		return response.status(401).json({ message: 'Unauthorized' });
 	}
 
 	try {
