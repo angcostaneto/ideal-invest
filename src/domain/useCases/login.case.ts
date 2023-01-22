@@ -13,7 +13,7 @@ export class LoginCase {
 		try {
 			const cliente = await this.repository.geClienteByEmail(request.body);
 
-			if (cliente && cliente.password) {
+			if (cliente && cliente.password && cliente.ativo) {
 				const isMatched = await compare(
 					request.body.password,
 					cliente.password

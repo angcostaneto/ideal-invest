@@ -15,8 +15,8 @@
 			"@services": ["src/services/index.ts"]
 		},
 		"outDir": "dist",
-		"declaration": true,
+		"declaration": true
   },
-	"exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts", "node_modules", "tmp"],
-	"include": ["**/*.ts"]
+	"exclude": ["node_modules", "tmp"],
+	"include": ["**/*.ts", "tsconfig.build.json"]
 }

@@ -4,6 +4,7 @@ import {
 	ClienteDto,
 	GetClienteByEmailDto
 } from '@domain';
+import { format } from 'date-fns';
 import { ClienteLoginDto } from 'src/domain/dtos/clienteLogin.dto';
 
 export class ClienteRepository {
@@ -13,23 +14,9 @@ export class ClienteRepository {
 		return {
 			nome: cliente.nome,
 			cpf: cliente.cpf,
-			dtNascimento: cliente.dtNascimento,
-			email: cliente.email,
-			ativo: true
-		} as ClienteDto;
-	};
-
-	createAdmin = async (clienteData: CreateClienteDto): Promise<ClienteDto> => {
-		const cliente = await Cliente.create(clienteData);
-
-		return {
-			nome: cliente.nome,
-			cpf: cliente.cpf,
-			dtNascimento: cliente.dtNascimento,
-			email: cliente.email,
-			ativo: true,
-			isAdmin: true
-		} as ClienteDto;
+			dtNascimento: format(cliente.dtNascimento, 'dd/MM/yyyy'),
+			email: cliente.email
+		};
 	};
 
 	geClienteByEmail = async (

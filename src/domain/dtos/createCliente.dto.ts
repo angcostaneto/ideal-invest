@@ -4,4 +4,5 @@ export interface CreateClienteDto {
 	email: string;
 	password: string;
 	dtNascimento: Date;
+	isAdmin?: boolean;
 }

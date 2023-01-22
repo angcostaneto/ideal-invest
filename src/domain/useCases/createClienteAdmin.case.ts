@@ -10,7 +10,10 @@ export class CreateClienteAdminCase {
 
 	execute = async (request: Request, response: Response) => {
 		try {
-			const result = await this.repository.createAdmin(request.body);
+			const result = await this.repository.create({
+				...request.body,
+				isAdmin: true
+			});
 			return response.status(201).send(result);
 		} catch (error) {
 			console.log(error);

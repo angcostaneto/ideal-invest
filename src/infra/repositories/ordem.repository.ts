@@ -1,6 +1,7 @@
 import { Ordem, CreateOrdemDto, OrdemDto, GetOrdemDto } from '@domain';
+import { format } from 'date-fns';
 
-export class OrdermRepository {
+export class OrdemRepository {
 	create = async (ordemData: CreateOrdemDto): Promise<OrdemDto> => {
 		const ordem = await Ordem.create(ordemData);
 
@@ -9,12 +10,12 @@ export class OrdermRepository {
 			valorCompra: ordem.valorCompra,
 			qtdCompra: ordem.qtdCompra,
 			totalCompra: ordem.totalCompra,
-			dataOrdem: ordem.dataOrdem,
+			dataOrdem: format(ordem.dataOrdem, 'dd/MM/yyyy'),
 			idProduto: ordem.idProduto
-		} as OrdemDto;
+		};
 	};
 
-	getById = async (ordermData: GetOrdemDto): Promise<OrdemDto | {}> => {
+	getById = async (ordermData: GetOrdemDto): Promise<OrdemDto> => {
 		const ordem = await Ordem.findOne({
 			where: {
 				idTransacao: ordermData.idTransacao
@@ -27,13 +28,13 @@ export class OrdermRepository {
 				valorCompra: ordem.valorCompra,
 				qtdCompra: ordem.qtdCompra,
 				totalCompra: ordem.totalCompra,
-				dataOrdem: ordem.dataOrdem,
+				dataOrdem: format(ordem.dataOrdem, 'dd/MM/yyyy'),
 				idProduto: ordem.idProduto
-			} as OrdemDto;
+			};
 		}
 
-		return {};
+		return {} as unknown as OrdemDto;
 	};
 }
 
-export const ordemRepository: OrdermRepository = new OrdermRepository();
+export const ordemRepository: OrdemRepository = new OrdemRepository();

@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - 3306:3306
     volumes:
       - my-db:/var/lib/mysql
 
@@ -20,12 +20,12 @@ services:
     ports:
       - 8080:8080
 
-  redis:
+  redis_database:
     image: redis:7.0.8-alpine
     restart: always
     ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --user redis-user --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      - 6379:6379
+    command: redis-server --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache:/data
 

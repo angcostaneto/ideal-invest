@@ -1,23 +1,44 @@
 import { Request, Response } from 'express';
-import { ordemRepository, OrdermRepository } from '@infra';
+import {
+	ordemRepository,
+	OrdemRepository,
+	produtoRepository,
+	ProdutoRepository
+} from '@infra';
 
 export class CreateOrdemCase {
-	private repository: OrdermRepository;
+	private ordemRepository: OrdemRepository;
+	private produtoRepository: ProdutoRepository;
 
-	constructor(repository: OrdermRepository) {
-		this.repository = repository;
+	constructor(
+		ordemRepository: OrdemRepository,
+		produtoRepository: ProdutoRepository
+	) {
+		this.ordemRepository = ordemRepository;
+		this.produtoRepository = produtoRepository;
 	}
 
 	execute = async (request: Request, response: Response) => {
 		try {
-			const result = await this.repository.create(request.body);
-			return response.status(201).send(result);
+			const produto = await this.produtoRepository.getById(
+				request.body.idProduto
+			);
+
+			if (produto && produto.ativo) {
+				const result = await this.ordemRepository.create(request.body);
+				return response.status(201).send(result);
+			}
+
+			return response.status(404).send({ message: 'Product desactivate!' });
 		} catch (error) {
 			console.log(error);
 		}
 	};
 }
 
-const createOrdemCase: CreateOrdemCase = new CreateOrdemCase(ordemRepository);
+const createOrdemCase: CreateOrdemCase = new CreateOrdemCase(
+	ordemRepository,
+	produtoRepository
+);
 
 export { createOrdemCase };

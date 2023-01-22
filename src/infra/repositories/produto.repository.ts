@@ -1,4 +1,4 @@
-import { Produto, CreateProdutoDto, ProdutoDto } from '@domain';
+import { Produto, CreateProdutoDto, ProdutoDto, GetProdutoDto } from '@domain';
 
 export class ProdutoRepository {
 	create = async (createProdutoDto: CreateProdutoDto): Promise<ProdutoDto> => {
@@ -8,7 +8,25 @@ export class ProdutoRepository {
 			idProduto: produto.idProduto,
 			nome: produto.nome,
 			ativo: produto.ativo
-		} as ProdutoDto;
+		};
+	};
+
+	getById = async (produtoData: GetProdutoDto): Promise<ProdutoDto> => {
+		const produto = await Produto.findOne({
+			where: {
+				idProduto: produtoData.idProduto
+			}
+		});
+
+		if (produto) {
+			return {
+				idProduto: produto.idProduto,
+				nome: produto.nome,
+				ativo: produto.ativo
+			};
+		}
+
+		return {} as unknown as ProdutoDto;
 	};
 }
 

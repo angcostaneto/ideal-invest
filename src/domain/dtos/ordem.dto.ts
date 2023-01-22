@@ -3,6 +3,6 @@ export interface OrdemDto {
 	valorCompra: number;
 	qtdCompra: number;
 	totalCompra: number;
-	dataOrdem: Date;
+	dataOrdem: string;
 	idProduto: number;
 }

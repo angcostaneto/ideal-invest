@@ -1,8 +1,7 @@
 export interface ClienteDto {
 	nome: string;
 	cpf: string;
-	dtNascimento: Date;
+	dtNascimento: string;
 	email: string;
-	ativo: Boolean;
 	isAdmin?: Boolean;
 }
