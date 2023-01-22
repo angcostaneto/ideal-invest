@@ -1,6 +1,7 @@
 export interface CreateClienteDto {
-	nome: String;
-	cpf: String;
-	password: String;
+	nome: string;
+	cpf: string;
+	email: string;
+	password: string;
 	dtNascimento: Date;
 }

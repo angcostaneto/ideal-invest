@@ -4,12 +4,14 @@ import * as swaggerUi from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: __dirname + '/../.env' });
 import {
+	createClienteAdminController,
 	createClienteController,
 	createOrdemController,
 	createProdutoController,
 	getOrdemController,
 	sequelize
 } from '@domain';
+import { loginController } from './domain/presentation/login.controller';
 
 export default class Api {
 	private apiRoutes: express.Router;
@@ -17,9 +19,11 @@ export default class Api {
 	constructor() {
 		this.apiRoutes = express.Router({ strict: false });
 		createClienteController(this.apiRoutes);
+		createClienteAdminController(this.apiRoutes);
 		createOrdemController(this.apiRoutes);
 		createProdutoController(this.apiRoutes);
 		getOrdemController(this.apiRoutes);
+		loginController(this.apiRoutes);
 	}
 
 	startApplication() {

@@ -5,3 +5,4 @@ export * from './ordem.dto';
 export * from './getOrdem.dto';
 export * from './createProduto.dto';
 export * from './produto.dto';
+export * from './getClientebyEmail.dto';

@@ -10,7 +10,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"@infra": ["src/infra/index.ts"],
-			"@domain": ["src/domain/index.ts"]
+			"@domain": ["src/domain/index.ts"],
+			"@middleware": ["src/middleware/index.ts"],
+			"@services": ["src/services/index.ts"]
 		},
 		"outDir": "dist",
 		"declaration": true,

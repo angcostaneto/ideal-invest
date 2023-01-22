@@ -8,7 +8,7 @@ import {
 	UpdatedAt,
 	DeletedAt
 } from 'sequelize-typescript';
-import * as bcrypt from 'bcrypt';
+import { hash } from '@services';
 import { CreateClienteDto } from '../dtos';
 
 @Table
@@ -25,6 +25,12 @@ export class Cliente extends Model<Cliente, CreateClienteDto> {
 		allowNull: false
 	})
 	declare nome: string;
+
+	@Column({
+		type: DataType.STRING,
+		allowNull: false
+	})
+	declare email: string;
 
 	@Column({
 		type: DataType.STRING,
@@ -47,6 +53,13 @@ export class Cliente extends Model<Cliente, CreateClienteDto> {
 	@Column({
 		type: DataType.BOOLEAN,
 		allowNull: false,
+		defaultValue: false
+	})
+	declare isAdmin: boolean;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false,
 		defaultValue: true
 	})
 	declare ativo: boolean;
@@ -60,18 +73,10 @@ export class Cliente extends Model<Cliente, CreateClienteDto> {
 	@DeletedAt
 	declare readonly deletedAt: Date;
 
-	declare jwt: string;
-	declare login: boolean;
-
 	@BeforeSave
 	static hashPassword = async (cliente: Cliente) => {
-		return bcrypt
-			.hash(cliente.password, 10)
-			.then((hash) => {
-				cliente.password = hash;
-			})
-			.catch((err) => {
-				throw new Error();
-			});
+		cliente.password = await hash(cliente.password);
+
+		return cliente.password;
 	};
 }
