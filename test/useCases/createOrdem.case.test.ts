@@ -70,7 +70,7 @@ describe('test create orderm case', () => {
 				valorCompra: 20.3,
 				qtdCompra: 3,
 				totalCompra: 60.9,
-				dataOrdem: '2023-01-21T00:00:00.000Z',
+				dataOrdem: '21/01/2023',
 				idProduto: 4
 			});
 		});

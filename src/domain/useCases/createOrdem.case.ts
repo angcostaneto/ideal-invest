@@ -20,12 +20,15 @@ export class CreateOrdemCase {
 
 	execute = async (request: Request, response: Response) => {
 		try {
-			const produto = await this.produtoRepository.getById(
-				request.body.idProduto
-			);
+			const produto = await this.produtoRepository.getById(request.body);
 
 			if (produto && produto.ativo) {
-				const result = await this.ordemRepository.create(request.body);
+				const params = {
+					...request.body,
+					idCliente: response.locals.userId
+				};
+
+				const result = await this.ordemRepository.create(params);
 				return response.status(201).send(result);
 			}
 
