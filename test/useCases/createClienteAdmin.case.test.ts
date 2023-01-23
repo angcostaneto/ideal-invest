@@ -39,7 +39,7 @@ describe('test create cliente admin case', () => {
 		beforeAll(async () => {
 			jest.spyOn(repository, 'create').mockResolvedValue({
 				nome: 'Angelo Costa Neto',
-				cpf: '44182499824',
+				cpf: '05209505006',
 				dtNascimento: '20/02/1994',
 				email: 'angelo@example.com'
 			});
@@ -53,7 +53,7 @@ describe('test create cliente admin case', () => {
 		it('should get correct value', () => {
 			chai.expect(response._getData()).to.deep.equal({
 				nome: 'Angelo Costa Neto',
-				cpf: '44182499824',
+				cpf: '05209505006',
 				dtNascimento: '20/02/1994',
 				email: 'angelo@example.com'
 			});
