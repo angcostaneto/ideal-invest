@@ -30,8 +30,8 @@ export class CreateOrdemCase {
 			}
 
 			return response.status(404).send({ message: 'Product desactivate!' });
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			return response.status(404).send({ status: 404, message: error.message });
 		}
 	};
 }

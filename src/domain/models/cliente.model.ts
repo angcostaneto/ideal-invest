@@ -6,10 +6,13 @@ import {
 	DataType,
 	CreatedAt,
 	UpdatedAt,
-	DeletedAt
+	DeletedAt,
+	IsEmail,
+	Is
 } from 'sequelize-typescript';
 import { hash } from '@services';
 import { CreateClienteDto } from '../dtos';
+import { isValidCPF } from '../validations';
 
 @Table
 export class Cliente extends Model<Cliente, CreateClienteDto> {
@@ -26,15 +29,19 @@ export class Cliente extends Model<Cliente, CreateClienteDto> {
 	})
 	declare nome: string;
 
+	@IsEmail
 	@Column({
 		type: DataType.STRING,
-		allowNull: false
+		allowNull: false,
+		unique: true
 	})
 	declare email: string;
 
+	@Is(isValidCPF)
 	@Column({
 		type: DataType.STRING,
-		allowNull: false
+		allowNull: false,
+		unique: true
 	})
 	declare cpf: string;
 

@@ -21,7 +21,7 @@ export class ClienteRepository {
 
 	geClienteByEmail = async (
 		clienteData: GetClienteByEmailDto
-	): Promise<ClienteLoginDto | undefined> => {
+	): Promise<ClienteLoginDto> => {
 		const cliente = await Cliente.findOne({
 			where: {
 				email: clienteData.email
@@ -41,7 +41,7 @@ export class ClienteRepository {
 			};
 		}
 
-		return undefined;
+		return {} as unknown as ClienteLoginDto;
 	};
 }
 

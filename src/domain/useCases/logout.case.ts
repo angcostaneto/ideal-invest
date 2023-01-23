@@ -16,7 +16,9 @@ export class LogoutCase {
 				message: 'Logged out successfully'
 			});
 		} catch (error) {
-			console.log(error);
+			return response
+				.status(401)
+				.send({ status: 401, message: 'Something Wrong!' });
 		}
 	};
 }

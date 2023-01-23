@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { clienteRepository, ClienteRepository } from '@infra';
+import { ValidationError } from 'sequelize';
 
 export class CreateClienteCase {
 	private repository: ClienteRepository;
@@ -12,8 +13,8 @@ export class CreateClienteCase {
 		try {
 			const result = await this.repository.create(request.body);
 			return response.status(201).send(result);
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			return response.status(400).send({ status: 404, message: error.message });
 		}
 	};
 }

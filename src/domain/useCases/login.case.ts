@@ -31,12 +31,18 @@ export class LoginCase {
 					});
 				}
 
-				return response.status(401).send({ message: 'Invallid credentials' });
+				return response
+					.status(401)
+					.send({ status: 401, message: 'Invallid credentials' });
 			}
 
-			return response.status(401).send({ message: 'Unauthorized' });
+			return response
+				.status(401)
+				.send({ status: 401, message: 'Invallid credentials' });
 		} catch (error) {
-			console.log(error);
+			return response
+				.status(401)
+				.send({ status: 401, message: 'Invallid credentials' });
 		}
 	};
 }

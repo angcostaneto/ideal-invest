@@ -15,8 +15,8 @@ export class CreateClienteAdminCase {
 				isAdmin: true
 			});
 			return response.status(201).send(result);
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			return response.status(404).send({ status: 404, message: error.message });
 		}
 	};
 }

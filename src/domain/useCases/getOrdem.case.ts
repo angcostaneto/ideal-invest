@@ -41,11 +41,16 @@ export class GetOrdemCase {
 
 					return response.status(200).send(result);
 				}
+				return response
+					.status(404)
+					.send({ status: 404, message: 'Produto not found or inactive' });
 			}
 
-			return response.status(404).send({ message: 'No ordem found' });
-		} catch (error) {
-			console.log(error);
+			return response
+				.status(404)
+				.send({ status: 404, message: 'Ordem not found' });
+		} catch (error: any) {
+			return response.status(404).send({ status: 404, message: error.message });
 		}
 	};
 }
