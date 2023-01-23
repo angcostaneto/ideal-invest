@@ -23,7 +23,9 @@ export const verifyIsAdmin = async (
 		if (isAdmin) {
 			return next();
 		}
+
+		return response.status(401).send({ message: 'Unauthorized!' });
 	} catch (error) {
-		return response.status(401).send({ message: 'Unauthorized' });
+		return response.status(401).send({ message: 'Unauthorized!' });
 	}
 };
