@@ -5,10 +5,10 @@ services:
     image: mysql:8.0.31
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - 3306:3306
     volumes:
@@ -24,8 +24,8 @@ services:
     image: redis:7.0.8-alpine
     restart: always
     ports:
-      - 6379:6379
-    command: redis-server --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      - ${REDIS_PORT}:${REDIS_PORT}
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
       - cache:/data
 
