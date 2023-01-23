@@ -52,7 +52,7 @@ export class Cliente extends Model<Cliente, CreateClienteDto> {
 	declare password: string;
 
 	@Column({
-		type: DataType.DATE,
+		type: DataType.DATEONLY,
 		allowNull: false
 	})
 	declare dtNascimento: Date;

@@ -1,6 +1,14 @@
 import { JwtInterface, verifyJwt, cacheGet } from '@services';
 import { Request, Response, NextFunction } from 'express';
 
+/**
+ *	Verify token from header
+ *
+ * @param request Request
+ * @param response Response
+ * @param next NextFunction
+ * @returns
+ */
 export const verifyToken = async (
 	request: Request,
 	response: Response,
@@ -14,6 +22,7 @@ export const verifyToken = async (
 		});
 	}
 
+	// Check if token is on blacklist in redis
 	const isBlackListed = await cacheGet(token);
 	if (isBlackListed) {
 		return response.status(401).json({ message: 'Unauthorized' });

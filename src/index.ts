@@ -1,8 +1,6 @@
 import express from 'express';
-import * as swaggerUi from 'swagger-ui-express';
-// import * as swaggerJson from './swagger/swagger.json';
 import * as dotenv from 'dotenv';
-dotenv.config({ path: __dirname + '/../.env' });
+dotenv.config({ path: __dirname + '/../.env' }); // Enable .env in all project, DO NOT MOVE THIS DECLARATION
 import {
 	createClienteAdminController,
 	createClienteController,
@@ -19,6 +17,8 @@ export default class Api {
 
 	constructor() {
 		this.apiRoutes = express.Router({ strict: false });
+
+		/** Set apis routes **/
 		createClienteController(this.apiRoutes);
 		createClienteAdminController(this.apiRoutes);
 		createOrdemController(this.apiRoutes);
@@ -35,14 +35,6 @@ export default class Api {
 		sequelize.sync();
 
 		app.use(express.json());
-
-		app.use(
-			'/docs',
-			swaggerUi.serve
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-			// swaggerUi.setup(swaggerJson)
-		);
-
 		app.use('/api', this.apiRoutes);
 		app.listen(port);
 

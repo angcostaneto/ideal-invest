@@ -1,6 +1,14 @@
-import { JwtInterface, verifyJwt } from '@services';
+import { cacheGet, JwtInterface, verifyJwt } from '@services';
 import { Request, Response, NextFunction } from 'express';
 
+/**
+ *	Verify if is admin
+ *
+ * @param request Request
+ * @param response Response
+ * @param next NextFunction
+ * @returns
+ */
 export const verifyIsAdmin = async (
 	request: Request,
 	response: Response,
@@ -12,6 +20,12 @@ export const verifyIsAdmin = async (
 		return response.status(403).send({
 			message: 'No token provided!'
 		});
+	}
+
+	// Check if token is on blacklist in redis
+	const isBlackListed = await cacheGet(token);
+	if (isBlackListed) {
+		return response.status(401).json({ message: 'Unauthorized' });
 	}
 
 	try {

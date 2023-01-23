@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 
+// Create connection with database and export
 export const sequelize = new Sequelize({
 	database: process.env['DATABASE'],
 	dialect: 'mysql',

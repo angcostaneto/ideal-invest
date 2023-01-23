@@ -18,6 +18,7 @@ export class CreateProdutoCase {
 	};
 }
 
+// Export instance to use in the main index
 const createProdutoCase: CreateProdutoCase = new CreateProdutoCase(
 	produtoRepository
 );

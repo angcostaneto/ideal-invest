@@ -11,6 +11,7 @@ export class LogoutCase {
 			const now = new Date();
 			const milliseconds = Math.floor(addMonths(now, 1).getTime() / 1000);
 
+			// Put token in blacklist for one month.
 			await cacheSet(token, token, milliseconds);
 			return response.status(200).send({
 				message: 'Logged out successfully'
@@ -23,6 +24,7 @@ export class LogoutCase {
 	};
 }
 
+// Export instance to use in the main index
 const logoutCase: LogoutCase = new LogoutCase();
 
 export { logoutCase };

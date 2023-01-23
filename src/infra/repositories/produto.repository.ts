@@ -1,6 +1,12 @@
 import { Produto, CreateProdutoDto, ProdutoDto, GetProdutoDto } from '@domain';
 
 export class ProdutoRepository {
+	/**
+	 * Create produto
+	 *
+	 * @param createProdutoDto CreateProdutoDto
+	 * @returns Promise<ProdutoDto>
+	 */
 	create = async (createProdutoDto: CreateProdutoDto): Promise<ProdutoDto> => {
 		const produto = await Produto.create(createProdutoDto);
 
@@ -11,6 +17,12 @@ export class ProdutoRepository {
 		};
 	};
 
+	/**
+	 * Get produto by id.
+	 *
+	 * @param produtoData GetProdutoDto
+	 * @returns Promise<ProdutoDto>
+	 */
 	getById = async (produtoData: GetProdutoDto): Promise<ProdutoDto> => {
 		const produto = await Produto.findOne({
 			where: {

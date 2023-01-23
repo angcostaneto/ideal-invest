@@ -25,7 +25,7 @@ export class CreateOrdemCase {
 			if (produto && produto.ativo) {
 				const params = {
 					...request.body,
-					idCliente: response.locals.userId
+					idCliente: response.locals.userId // Get user id from middleware, so is not necessary to pass by parameter
 				};
 
 				const result = await this.ordemRepository.create(params);
@@ -39,6 +39,7 @@ export class CreateOrdemCase {
 	};
 }
 
+// Export instance to use in the main index
 const createOrdemCase: CreateOrdemCase = new CreateOrdemCase(
 	ordemRepository,
 	produtoRepository

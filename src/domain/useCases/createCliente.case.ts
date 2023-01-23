@@ -19,6 +19,7 @@ export class CreateClienteCase {
 	};
 }
 
+// Export instance to use in the main index
 const createClienteCase: CreateClienteCase = new CreateClienteCase(
 	clienteRepository
 );

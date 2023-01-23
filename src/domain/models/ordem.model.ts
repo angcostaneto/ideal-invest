@@ -41,7 +41,7 @@ export class Ordem extends Model<Ordem, CreateOrdemDto> {
 	declare totalCompra: number;
 
 	@Column({
-		type: DataType.DATE,
+		type: DataType.DATEONLY,
 		allowNull: false
 	})
 	declare dataOrdem: Date;

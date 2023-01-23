@@ -12,7 +12,7 @@ export class CreateClienteAdminCase {
 		try {
 			const result = await this.repository.create({
 				...request.body,
-				isAdmin: true
+				isAdmin: true // Set admins flag, for create admin cliente
 			});
 			return response.status(201).send(result);
 		} catch (error: any) {
@@ -21,6 +21,7 @@ export class CreateClienteAdminCase {
 	};
 }
 
+// Export instance to use in the main index
 const createClienteAdminCase: CreateClienteAdminCase =
 	new CreateClienteAdminCase(clienteRepository);
 

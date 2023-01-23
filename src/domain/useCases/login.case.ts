@@ -47,6 +47,7 @@ export class LoginCase {
 	};
 }
 
+// Export instance to use in the main index
 const loginCase: LoginCase = new LoginCase(clienteRepository);
 
 export { loginCase };

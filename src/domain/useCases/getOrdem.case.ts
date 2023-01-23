@@ -21,7 +21,8 @@ export class GetOrdemCase {
 	execute = async (request: Request, response: Response) => {
 		try {
 			const ordem = await this.ordemRepository.getById({
-				idTransacao: Number(request.params['idTransacao'])
+				idTransacao: Number(request.params['idTransacao']),
+				idCliente: Number(response.locals.userId) // Get idCliente from token, this protect from user try to see ordems from another user
 			});
 
 			if (ordem) {
@@ -55,6 +56,7 @@ export class GetOrdemCase {
 	};
 }
 
+// Export instance to use in the main index
 const getOrdemCase: GetOrdemCase = new GetOrdemCase(
 	ordemRepository,
 	produtoRepository
