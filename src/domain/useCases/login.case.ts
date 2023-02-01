@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { clienteRepository, ClienteRepository } from '@infra';
 import { compare, createToken, JwtInterface } from '@services';
+import { LoginException } from '@exceptions';
 
 export class LoginCase {
 	private repository: ClienteRepository;
@@ -9,7 +10,11 @@ export class LoginCase {
 		this.repository = repository;
 	}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const cliente = await this.repository.geClienteByEmail(request.body);
 
@@ -31,18 +36,12 @@ export class LoginCase {
 					});
 				}
 
-				return response
-					.status(401)
-					.send({ status: 401, message: 'Invallid credentials' });
+				throw new LoginException();
 			}
 
-			return response
-				.status(401)
-				.send({ status: 401, message: 'Invallid credentials' });
+			throw new LoginException();
 		} catch (error) {
-			return response
-				.status(401)
-				.send({ status: 401, message: 'Invallid credentials' });
+			next(new LoginException());
 		}
 	};
 }

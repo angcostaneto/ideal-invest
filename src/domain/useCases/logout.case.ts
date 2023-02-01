@@ -1,11 +1,16 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { cacheSet } from '@services';
 import { addMonths } from 'date-fns';
+import { HttpException } from '@exceptions';
 
 export class LogoutCase {
 	constructor() {}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const token = request.headers.authorization as string;
 			const now = new Date();
@@ -17,9 +22,7 @@ export class LogoutCase {
 				message: 'Logged out successfully'
 			});
 		} catch (error) {
-			return response
-				.status(401)
-				.send({ status: 401, message: 'Something Wrong!' });
+			next(new HttpException(404, 'Something Worng'));
 		}
 	};
 }

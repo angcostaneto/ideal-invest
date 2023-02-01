@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { produtoRepository, ProdutoRepository } from '@infra';
+import { CreateProductException } from '@exceptions';
 
 export class CreateProdutoCase {
 	private repository: ProdutoRepository;
@@ -8,12 +9,16 @@ export class CreateProdutoCase {
 		this.repository = repository;
 	}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const result = await this.repository.create(request.body);
 			return response.status(201).send(result);
 		} catch (error: any) {
-			return response.status(404).send({ status: 404, message: error.message });
+			next(new CreateProductException(error.message));
 		}
 	};
 }
