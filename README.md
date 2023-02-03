@@ -44,5 +44,5 @@ Each route has a middleware configureted for herself, like the table bellow:
 ## TODO
 
 - [ ] Configure Swagger to autogenerate documents
-- [ ] Do better error handler
+- [x] Do better error handler
 - [ ] Make test for error cases

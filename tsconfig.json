@@ -13,7 +13,8 @@
 			"@domain": ["src/domain/index.ts"],
 			"@middleware": ["src/middleware/index.ts"],
 			"@services": ["src/services/index.ts"],
-			"@validations": ["src/validations/index.ts"]
+			"@validations": ["src/validations/index.ts"],
+			"@exceptions": ["src/exceptions/index.ts"]
 		},
 		"outDir": "dist",
 		"declaration": true

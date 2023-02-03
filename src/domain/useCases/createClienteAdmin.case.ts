@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { clienteRepository, ClienteRepository } from '@infra';
+import { CreateClienteAdminException } from '@exceptions';
 
 export class CreateClienteAdminCase {
 	private repository: ClienteRepository;
@@ -8,7 +9,11 @@ export class CreateClienteAdminCase {
 		this.repository = repository;
 	}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const result = await this.repository.create({
 				...request.body,
@@ -16,7 +21,7 @@ export class CreateClienteAdminCase {
 			});
 			return response.status(201).send(result);
 		} catch (error: any) {
-			return response.status(404).send({ status: 404, message: error.message });
+			next(new CreateClienteAdminException(error.message));
 		}
 	};
 }

@@ -1,10 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import {
 	ordemRepository,
 	OrdemRepository,
 	produtoRepository,
 	ProdutoRepository
 } from '@infra';
+import { ProductDeactivate } from '@exceptions';
 
 export class CreateOrdemCase {
 	private ordemRepository: OrdemRepository;
@@ -18,7 +19,11 @@ export class CreateOrdemCase {
 		this.produtoRepository = produtoRepository;
 	}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const produto = await this.produtoRepository.getById(request.body);
 
@@ -32,9 +37,9 @@ export class CreateOrdemCase {
 				return response.status(201).send(result);
 			}
 
-			return response.status(404).send({ message: 'Product desactivate!' });
+			throw new ProductDeactivate();
 		} catch (error: any) {
-			return response.status(404).send({ status: 404, message: error.message });
+			next(new ProductDeactivate());
 		}
 	};
 }

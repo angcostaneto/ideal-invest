@@ -1,10 +1,15 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import {
 	ordemRepository,
 	OrdemRepository,
 	produtoRepository,
 	ProdutoRepository
 } from '@infra';
+import {
+	OrdemException,
+	OrdermNotFound,
+	ProductNotFoundOrDeactivate
+} from '@exceptions';
 
 export class GetOrdemCase {
 	private ordemRepository: OrdemRepository;
@@ -18,7 +23,11 @@ export class GetOrdemCase {
 		this.produtoRepository = produtoRepository;
 	}
 
-	execute = async (request: Request, response: Response) => {
+	execute = async (
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) => {
 		try {
 			const ordem = await this.ordemRepository.getById({
 				idTransacao: Number(request.params['idTransacao']),
@@ -42,16 +51,12 @@ export class GetOrdemCase {
 
 					return response.status(200).send(result);
 				}
-				return response
-					.status(404)
-					.send({ status: 404, message: 'Produto not found or inactive' });
+				throw new ProductNotFoundOrDeactivate();
 			}
 
-			return response
-				.status(404)
-				.send({ status: 404, message: 'Ordem not found' });
+			throw new OrdermNotFound();
 		} catch (error: any) {
-			return response.status(404).send({ status: 404, message: error.message });
+			next(new OrdemException(error.message));
 		}
 	};
 }

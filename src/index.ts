@@ -7,10 +7,11 @@ import {
 	createOrdemController,
 	createProdutoController,
 	getOrdemController,
+	loginController,
+	logoutController,
 	sequelize
 } from '@domain';
-import { loginController } from './domain/presentation/login.controller';
-import { logoutController } from './domain/presentation/logout.controller';
+import { errorMiddleware } from '@middleware';
 
 export default class Api {
 	private apiRoutes: express.Router;
@@ -36,6 +37,7 @@ export default class Api {
 
 		app.use(express.json());
 		app.use('/api', this.apiRoutes);
+		app.use(errorMiddleware);
 		app.listen(port);
 
 		return app;
